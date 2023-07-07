@@ -16,9 +16,16 @@ class SQLServerConnection:
     def execute_query(self, query):
         cursor = self.connection.cursor()
         cursor.execute(query)
-        result = cursor.fetchall()
+        columns = [column[0] for column in cursor.description]
+        results = []
+        for row in cursor.fetchall():
+            row_array = []
+            for value in row:
+                row_array.append(str(value))
+            results.append(dict(zip(columns, row_array)))
+        result_json = results
         cursor.close()
-        return result
+        return result_json
 
     def close(self):
         if self.connection:

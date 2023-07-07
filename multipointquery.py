@@ -12,6 +12,6 @@ class MultiPointQuery:
             sql_connection.connect()
             result = sql_connection.execute_query(self.query)
             sql_connection.close()
-            servers_data.append({"server": server, "data":servers_data})
+            servers_data.append({"server": server, "data":result})
         return servers_data
     
